@@ -1,19 +1,24 @@
 import React from 'react';
-import Page from 'components/Page';
+
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import * as pageActions from 'actions/pageActions';
+import Vacancies from 'containers/Vacancies';
+import Page from 'components/Page';
 import styles from './styles.less';
+
 
 class App extends React.Component {
     componentWillReceiveProps(props) {
     }
-
     render() {
-        const {loadVacancies} = this.props.pageActions;
         return (
             <div className="container">
-               <Page loadBtnClick={loadVacancies} isLoading={this.props.isLoading} isLoaded={this.props.isLoaded} vacancies={this.props.vacancies} limit={this.props.limit}/>
+                 <Switch>
+                    {/*<Route exact path='/' component={(props) => <Page {...props}/>}/>*/}
+                    <Route exact path='/vacancies' component={Vacancies}/>
+                </Switch>
             </div>
         );
     }
@@ -21,7 +26,6 @@ class App extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        vacancies: state.vacancies.entities,
         isLoading: state.vacancies.isLoading,
         isLoaded: state.vacancies.isLoaded,
         limit: state.vacancies.limit,
@@ -32,8 +36,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        pageActions: bindActionCreators(pageActions, dispatch)
+        
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

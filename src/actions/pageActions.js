@@ -23,7 +23,8 @@ function loadVacancies(limit, offset){
         dispatch(loadVacanciesStart());
         let vacancies = [];
             //todo try catch
-            let result = await loadData(queryBase.concat(limit,"&offset=",offset));
+            let result = await loadData(queryBase.concat(limit,"&offset=",offset*limit));
+            dispatch(spotPage(offset));
             vacancies=result.vacancies;
             dispatch(loadVacanciesFinish(vacancies, result.metadata.resultset.count))
     }
@@ -47,4 +48,10 @@ function loadVacanciesFinish(vacancies, totalCount) {
         totalCount: totalCount
     }
 }
-export {loadVacancies}
+function spotPage(curPage) {
+    return {
+        type: 'PAGE_INDENTIFIED',
+        page: curPage
+    }
+}
+export {loadVacancies, spotPage}
