@@ -37,11 +37,17 @@ export default class VacancyItem extends React.Component {
                     <span>{data.working_type&&data.working_type.title}</span>
                     <span>{data.schedule&&data.schedule.title}</span>
                 </div>
+                {
+                   <div className="company-logo">
+                        <img className='company-img' src={data.company.logo && data.company.logo.url} alt={data.company.title}/>
+                   </div>
+                }
                 <div className="controls">
                     <Btn text="Развернуть" icon = ""/>
                     <Btn text="В избранное" icon = "flag"/>
                     <Btn classes="hidden" text="Скрыть" icon = "close"/>
                 </div>
+              
             </div>
         )
     }

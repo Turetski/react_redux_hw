@@ -1,4 +1,4 @@
-const queryBase= "https://api.zp.ru/v1/vacancies/?period=today&geo_id=826&limit=";
+const queryBase= "https://api.zp.ru/v1/vacancies/?geo_id=826&limit=";
 //period=today&is_new_only=true&
 function loadData(url){
     return new Promise (function(resolve, reject){
@@ -18,19 +18,14 @@ function loadData(url){
     })
 }
 
-function loadVacancies(){
+function loadVacancies(limit, offset){
     return async (dispatch) => {
         dispatch(loadVacanciesStart());
-        let vacancies = [],
-            meta={
-                    limit: 25,
-                    offset:0,
-                    count: 100+1
-                };
+        let vacancies = [];
             //todo try catch
-                let result = await loadData(queryBase.concat(meta.limit,"&offset=",meta.offset));
+            let result = await loadData(queryBase.concat(limit,"&offset=",offset));
             vacancies=result.vacancies;
-        dispatch(loadVacanciesFinish(vacancies))
+            dispatch(loadVacanciesFinish(vacancies, result.metadata.resultset.count))
     }
 }
 
@@ -45,10 +40,11 @@ function loadVacanciesError(error) {
         error: error
     }
 }
-function loadVacanciesFinish(vacancies) {
+function loadVacanciesFinish(vacancies, totalCount) {
     return {
         type: 'LOAD_VACANCIES_FINISH',
-        vacancies: vacancies
+        vacancies: vacancies,
+        totalCount: totalCount
     }
 }
 export {loadVacancies}

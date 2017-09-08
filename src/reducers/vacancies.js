@@ -1,7 +1,10 @@
 const initialState = {
     entities:[],
     isLoading: false,
-    isLoaded:false
+    isLoaded:false,
+    limit: 25,
+    page: 0,
+    totalCount:0 
 };
 
 export default (state = initialState, action) => {
@@ -13,7 +16,7 @@ export default (state = initialState, action) => {
             return {...state, isLoading: false};
 
         case 'LOAD_VACANCIES_FINISH':
-            return { ...state, entities: action.vacancies, isLoading: false, isLoaded: true };
+            return { ...state, entities: action.vacancies, isLoading: false, isLoaded: true, totalCount: action.totalCount };
 
         default:
             return state;
