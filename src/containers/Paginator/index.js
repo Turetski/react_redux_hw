@@ -13,7 +13,7 @@ class Paginator extends React.Component {
             console.log(curPage)
         return (
             <div className="paginator">
-                 <Link className={'pag-link'} disabled={prevPage< && ' disabled'} to={'/vacancies?page='+prevPage}>Предыдущая</Link>
+                 <Link className={'pag-link'} disabled={prevPage<0 && ' disabled'} to={'/vacancies?page='+prevPage}>Предыдущая</Link>
                  <Link className='pag-link' to={'/vacancies?page='+nextPage}>Следующая</Link>
             </div>
         );

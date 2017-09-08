@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import * as pageActions from 'actions/pageActions';
 import Vacancies from 'containers/Vacancies';
-import Page from 'components/Page';
 import styles from './styles.less';
 
 
