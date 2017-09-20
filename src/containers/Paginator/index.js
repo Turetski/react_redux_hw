@@ -9,12 +9,34 @@ class Paginator extends React.Component {
     render() {
         let curPage = parseInt(this.props.page,10),
             nextPage = curPage+1,
-            prevPage = curPage-1;
-            console.log(curPage)
+            prevPage = curPage-1,
+            lastPage = Math.ceil(this.props.totalCount/this.props.limit),
+            firstPageLink = curPage-2,
+            lastPageLink = curPage+2,
+            pages=[];
+        if(firstPageLink<0) {
+            firstPageLink = 0;
+            lastPageLink = firstPageLink+4;
+        }
+        if(lastPageLink>lastPage) lastPageLink = lastPage;
+        for(let i=firstPageLink; i<=lastPageLink; i++){
+            pages.push(i)
+        }
+        console.log(pages);
         return (
             <div className="paginator">
-                 <Link className={'pag-link'} disabled={prevPage<0 && ' disabled'} to={'/vacancies?page='+prevPage}>Предыдущая</Link>
-                 <Link className='pag-link' to={'/vacancies?page='+nextPage}>Следующая</Link>
+                {
+                    prevPage>=0 ? <Link className={'pag-link'} to={'/vacancies?page='+prevPage}>Предыдущая</Link>
+                        :<span className='pag-link'>Предыдущая</span>
+                }
+                {    pages.map(num=>(
+                        <Link className = {'pag-button'} to={'/vacancies?page='+num}>{num}</Link>
+                    ))
+                }
+                {    nextPage<lastPage ? <Link className='pag-link' to={'/vacancies?page='+nextPage}>Следующая</Link>
+                        :<span className='pag-link'>Следующая</span>
+                }
+                
             </div>
         );
     }
@@ -22,10 +44,11 @@ class Paginator extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        page: state.vacancies.page
+        page: state.vacancies.page,
+        totalCount: state.vacancies.totalCount,
+        limit: state.vacancies.limit
     }
 }
-
 function mapDispatchToProps(dispatch) {
     return {
         

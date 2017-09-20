@@ -16,19 +16,25 @@ class Vacancies extends React.Component {
     componentWillReceiveProps(nextProps){
         const {loadVacancies} = this.props.pageActions;
         if(nextProps.page!=this.props.page){
-            console.log(this.props.page, 'new load')
             loadVacancies(this.props.limit,nextProps.page);
         }
     }
     render() {
-        if(!this.props.isLoaded) return(<Loader/>);
+        
         return (
             <div className="vacancies">
-                <Paginator/>
-                {this.props.data.map(vacancy => (
-                    <VacancyItem data={vacancy} key = {vacancy.id}/>
-                ))}
+                <div className="wrapper">
+                    <Paginator/>
+                    <div className="vac-items">
+                        {(!this.props.isLoaded) ? 
+                            <Loader/>:
+                            this.props.data.map(vacancy => (
+                            <VacancyItem data={vacancy} key = {vacancy.id}/>
+                        ))}
+                    </div>
+                </div>
             </div>
+            
         )
     }
 }

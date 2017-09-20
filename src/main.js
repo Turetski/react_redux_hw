@@ -10,7 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 const store = configureStore();
 
 ReactDOM.render(<Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter history={React.browserHistory}>
             <App />
         </BrowserRouter>    
     </Provider>
